@@ -1,4 +1,4 @@
-"""import boto3
+import boto3
 import json
 from decimal import Decimal
 # Get the service resource.
@@ -305,7 +305,7 @@ item19 = table.put_item(
         'ODIWinPercentage': str(Decimal(50)),
         }
     )
-print(item19)"""
+print(item19)
 
 #retrieve data
 
@@ -330,7 +330,7 @@ DynamoDBtable = dynamodb.Table('cricketplayers')
 
 allUsers = DynamoDBtable.scan()
 print(allUsers)
-"""
+
 #delete data
 import boto3
 
@@ -339,7 +339,21 @@ DynamoDBtable = dynamodb.Table('cricketplayers')
 # Delete item
 response = DynamoDBtable.delete_item(Key = {'fullname': 'dasun shanaka', 'year': 2021}) # Item Key
 
-print(response)"""
+print(response)
+
+#insert batch
+import boto3
+
+dynamodb = boto3.resource('dynamodb', region_name='ap-northeast-1')
+
+DynamoDBtable = dynamodb.Table('cricketplayers') # Input table name
+
+# Write items to table
+with DynamoDBtable.batch_writer() as batch:
+    batch.put_item(Item={"fullname": "dasun shanaka", "year": 2021})
+print(batch)
+
+print(response)
 
 #check all
 import boto3
